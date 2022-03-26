@@ -55,7 +55,8 @@
     </mat-card-content>
   </mat-card>
 <br/>
-  <mat-card>
+<div *ngIf="this.dataSource.length">
+  <mat-card >
     <mat-card-content>
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" width="100%">
         <ng-container matColumnDef="id">
@@ -103,4 +104,5 @@
       </table>
     </mat-card-content>
   </mat-card>
+</div>
 </div>

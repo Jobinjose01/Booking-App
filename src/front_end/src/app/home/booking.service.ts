@@ -48,4 +48,13 @@ export class BookingService {
         })
       );
   }
+
+  getMyBooking(){
+
+    return this.httpClient.get<any>(environment.serverUrl + 'trip/mytrips').pipe(
+      map((result) => {
+        return result;
+      })
+    );
+  }
 }

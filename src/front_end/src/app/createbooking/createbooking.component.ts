@@ -104,12 +104,12 @@ export class CreateBookingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       
-      if(result != '' && result !== undefined){
+      if(result != '' && result !== undefined && result != 0 ){
         
         this.spots = result;
-        
+            console.log(this.spots);
            this.isLoading = true;
-          const resultdata = this.bookingService.createBooking(trip_id, this.spots);
+           const resultdata = this.bookingService.createBooking(trip_id, this.spots);
               resultdata
               .pipe(first())
               .subscribe(
@@ -127,6 +127,8 @@ export class CreateBookingComponent implements OnInit {
                     this.snackbarMessage("something went wrong !");
                   }
             );
+      }else{
+          this.snackbarMessage("Please enter some valid numbers!");
       }
 
         

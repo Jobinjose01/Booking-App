@@ -46,9 +46,7 @@ class TripBookingController extends Controller
             $data['message'] = $msg;
             return $data;
             
-        }
-
-        
+        }       
 
 
         public function createBooking(Request $request){
@@ -90,20 +88,40 @@ class TripBookingController extends Controller
 
             if($avilable == 0){
                 $msg = "Sold Out!";
-                $data = $this->failedMessage($msg);
-                
+                $data = $this->failedMessage($msg);                
                 
             }
-            
+
             return response()->json($data);
         }
 
         public function countBookedSpots($trip_id){
 
             return \Db::table('trip_bookings AS B')
+                            ->join('trips AS T','T.id','=','B.trip_id')
                             ->join('trip_booking_details AS D','D.booking_id','=','B.booking_id')
                             ->Where('D.booking_status',1)
                             ->where('B.trip_id',$trip_id)
                             ->SUM('D.spots');
+        }
+
+        public function getAllMyTrips(Request $request){
+
+            $user = Auth::user();
+
+            $result = TripBooking::leftjoin('trip_booking_details AS D','D.booking_id','=','trip_bookings.booking_id')
+                ->join('trips AS T','T.id','=','trip_bookings.trip_id')
+                ->join('cities AS C','C.id','=','T.source_city_id')
+                ->join('cities AS C1','C1.id','=','T.destination_city_id')
+                ->Where('trip_bookings.booked_by',$user->id)
+                ->WhereNull('T.deleted_at')
+                ->where('T.status',1)
+                ->get([
+                    'C.name as source', 'C1.name as destination',
+                    'D.spots','trip_bookings.booking_id','D.booking_status',
+                    'trip_bookings.created_at','D.cancelled_on'
+                ]);
+            return response()->json($result);     
+
         }
 }

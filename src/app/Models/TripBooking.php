@@ -22,4 +22,18 @@ class TripBooking extends Model
 
         return date("d-M-Y",strtotime($value));
     }
+
+    public function getCancelledOnAttribute($value){
+
+        return !empty($value) ? date("d-M-Y",strtotime($value)) : '-';
+    }
+
+    public function getBookingStatusAttribute($value){
+
+        if($value == 1){
+            return "Booked";
+        }elseif($value == 0){
+            return "Cancelled";            
+        }
+    }
 }

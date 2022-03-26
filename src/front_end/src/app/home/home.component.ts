@@ -3,7 +3,7 @@ import { finalize, first } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Credentials, CredentialsService } from '../auth/credentials.service';
 import { Router, NavigationEnd } from '@angular/router';
-
+import { BookingService } from '../home/booking.service';
 
 @Component({
   selector: 'app-home',
@@ -20,24 +20,45 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private snackbar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private bookingService : BookingService
   ) {
     
+    this.displayedColumns = [
+      'booking_id',
+      'source',
+      'destination',
+      'spots',
+      'status',
+      'cancelled_on',
+      'created_at',
+      'updated_at',
+    ];
   }
 
   ngOnInit() {
-    console.log("here 1");
-
     
+
+    this.loadMyBooking();
   }
 
   
 
-  loadParcelList() {
+  loadMyBooking() {
     this.isLoading = true;
+    
+    this.dataSource = [];
 
-    
-    
+   
+      const resultdata = this.bookingService.getMyBooking();
+      resultdata.pipe(first()).subscribe({
+        next: (data) => {
+          this.dataSource = data;
+        },
+        error: (error) => {
+          this.errorMessage = error.message;
+        },
+      });
   }
 
   snackbarMessage(message: string) {
