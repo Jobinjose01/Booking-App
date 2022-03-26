@@ -36,7 +36,17 @@
             (click)="isMobile && sidenav.close()"
             *ngIf="user"
           >
-            <span translate>Home</span>
+            <span translate>My Booking</span>
+          </a>
+          <mat-divider></mat-divider>
+          <a
+            mat-list-item
+            routerLink="/createbooking"
+            routerLinkActive="active"
+            (click)="isMobile && sidenav.close()"
+            *ngIf="user"        
+          >
+            <span translate>Create Booking</span>
           </a>
           <mat-divider></mat-divider>
           <a

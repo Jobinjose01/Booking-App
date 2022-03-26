@@ -1,0 +1,106 @@
+<div class="container">
+  <mat-card>
+  
+    <mat-card-content>
+      <form (ngSubmit)="checkAvailability()" [formGroup]="bookingForm" novalidate>
+        <div class="login-error" [hidden]="!error || isLoading" translate>{{ error }}</div>
+        <br />
+        <div class="login-fields" fxLayout="column" fxLayoutAlign="space-between none" fxFlex="30">
+          <mat-form-field appearance="fill">
+              <mat-label>From City </mat-label>
+              <mat-select matNativeControl  [(ngModel)]="source_city_id"
+                  formControlName="source_city_id" 
+                  required
+                 
+                  >
+                  <mat-option *ngFor="let city of cities" [value]="city.id">
+                    {{city.name}}
+                  </mat-option>
+              </mat-select>
+            <mat-error *ngIf="bookingForm.controls.source_city_id.invalid && bookingForm.controls.source_city_id.touched">
+              <span translate>From City is required</span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+              <mat-label>Destination City </mat-label>
+              <mat-select matNativeControl  [(ngModel)]="destination_city_id"
+              formControlName="destination_city_id" 
+              required
+             
+              >
+             
+              <mat-option *ngFor="let city of cities" [value]="city.id">
+                {{city.name}}
+              </mat-option>
+          </mat-select>
+            <mat-error
+              *ngIf="bookingForm.controls.destination_city_id.invalid && bookingForm.controls.destination_city_id.touched"
+            >
+              <span translate>Destination City is required</span>
+            </mat-error>
+          </mat-form-field>
+          
+
+          <button
+            mat-raised-button
+            color="primary"
+            class="my-button-class"
+            type="submit"
+            [disabled]="bookingForm.invalid || isLoading"
+          >
+            <span translate>Check Availability</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+<br/>
+  <mat-card>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" width="100%">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let element" align="left">{{ element.id }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="source">
+          <th mat-header-cell *matHeaderCellDef>From City</th>
+          <td mat-cell *matCellDef="let element" align="left">{{ element.source }}</td>
+        </ng-container>
+    
+    
+        <ng-container matColumnDef="destination">
+          <th mat-header-cell *matHeaderCellDef>To City</th>
+          <td mat-cell *matCellDef="let element" align="left">{{ element.destination }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="spots">
+          <th mat-header-cell *matHeaderCellDef>Total Spots</th>
+          <td mat-cell *matCellDef="let element" align="left">{{ element.spots }}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="available_spots">
+          <th mat-header-cell *matHeaderCellDef>Available Spots</th>
+          <td mat-cell *matCellDef="let element" align="left">
+            {{ element.available_spots || '-' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="created_at">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element" align="left">
+            <button [disabled]="element.available_spots == 0"  mat-raised-button color="primary" type="button" (click)="bookmyTrip(element.id)" >Book</button>
+          </td>
+        </ng-container>
+    
+        
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="8">No data found</td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

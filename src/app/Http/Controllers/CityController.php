@@ -15,6 +15,6 @@ class CityController extends Controller
 
             $user = Auth::user();
             //echo $user->name;
-            return response()->json(City::where('status',1)->get());
+            return response()->json(City::where('status',1)->get(['id','name']));
         }
 }

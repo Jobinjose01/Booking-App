@@ -5,42 +5,43 @@ import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 
-export interface PickupContext {
+export interface bookingContext {
   resultdata: any;
-  pickup_address: string;
-  delivery_address: string;
+  source_city_id: string;
+  destination_city_id: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class ParcelService {
+export class BookingService {
   result: any;
   resultdata: any;
 
   constructor(private httpClient: HttpClient) {}
 
-  getSendersList() {
-    return this.httpClient.get<any>(environment.serverUrl + 'parcel/list').pipe(
+  getCities() {
+    return this.httpClient.get<any>(environment.serverUrl + 'cities').pipe(
       map((result) => {
         return result;
       })
     );
   }
 
-  getBikersList() {
-    return this.httpClient.get<any>(environment.serverUrl + 'parcel/bikerslist').pipe(
+  checkAvailability(context: bookingContext){
+    let source_city_id = context.source_city_id;
+    let destination_city_id = context.destination_city_id;
+    return this.httpClient.post<any>(environment.serverUrl + 'trip/availability',{destination_city_id, source_city_id}).pipe(
       map((result) => {
         return result;
       })
     );
   }
 
-  createparcel(context: PickupContext) {
-    let pickup_address = context.pickup_address;
-    let delivery_address = context.delivery_address;
+  createBooking(trip_id:bigint, spots :bigint) {
+    
     return this.httpClient
-      .post<any>(environment.serverUrl + 'parcel/create', { pickup_address, delivery_address })
+      .post<any>(environment.serverUrl + 'trip/booking', {trip_id, spots})
       .pipe(
         map((result) => {
           return result;

@@ -8,7 +8,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
   styleUrls: ['./date-dialog.component.css'],
 })
 export class DateDialogComponent implements OnInit {
-  datepicker: string = '';
+  spots: any;
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<DateDialogComponent>,

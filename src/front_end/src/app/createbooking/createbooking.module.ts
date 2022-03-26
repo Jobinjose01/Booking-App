@@ -6,8 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@shared';
 import { MaterialModule } from '@app/material.module';
-import { CreateParcelRoutingModule } from './createparcel-routing.module';
-import { CreateParcelComponent } from './createparcel.component';
+import { CreateBookingRoutingModule } from './createbooking-routing.module';
+import { CreateBookingComponent } from './createbooking.component';
 
 @NgModule({
   imports: [
@@ -17,8 +17,8 @@ import { CreateParcelComponent } from './createparcel.component';
     ReactiveFormsModule,
     FlexLayoutModule,
     MaterialModule,
-    CreateParcelRoutingModule,
+    CreateBookingRoutingModule,
   ],
-  declarations: [CreateParcelComponent],
+  declarations: [CreateBookingComponent],
 })
-export class CreateParcelModule {}
+export class CreateBookingModule {}

@@ -30,5 +30,13 @@ $router->group(['middleware' => ['auth'], 'prefix' => 'api'], function () use ($
     $router->get('trip/all',  ['uses' => 'TripController@getAllTrips']);
 
     $router->post('trip/create',  ['uses' => 'TripController@createTrip']);
+    
+    $router->post('trip/availability',  ['uses' => 'TripBookingController@checkAvailabilty']);
+
+    $router->post('trip/booking',  ['uses' => 'TripBookingController@createBooking']);
+
+
+
+
 
 });
