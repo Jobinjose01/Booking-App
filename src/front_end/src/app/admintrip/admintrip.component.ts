@@ -27,6 +27,8 @@ export class AdmintripComponent implements OnInit {
   resultdata: any;
   cities: any;
   errormsg: string | undefined;
+  destination_city_id: any ;
+  source_city_id: any;
 
   constructor(
     private router: Router,
@@ -59,33 +61,41 @@ export class AdmintripComponent implements OnInit {
       },
     });
   }
+
   createTrip(){
 
-    this.isLoading = true;
-    const parceldata = this.adminService.createTrip(this.tripForm.value);
-    parceldata
-      .pipe(first())
-      .subscribe(
-        data => {
-           this.resultdata = data;           
-           this.isLoading = false;
+    if(this.destination_city_id == this.source_city_id){
 
-          
-          if (this.resultdata.id > 0) {
-              
-              this.snackbarMessage("Trip created Successfully!");
-              
-          }else{
-            this.snackbarMessage("Trip Creation Failed!");
+      this.snackbarMessage("From City and Destination City cannot be the same!");
+
+    }else{
+
+      this.isLoading = true;
+      const parceldata = this.adminService.createTrip(this.tripForm.value);
+      parceldata
+        .pipe(first())
+        .subscribe(
+          data => {
+            this.resultdata = data;           
+            this.isLoading = false;
+
+            
+            if (this.resultdata.status > 0) {
+                
+                this.snackbarMessage("Trip created Successfully!");
+                
+            }else{
+              this.snackbarMessage("Trip Creation Failed!");
+            }
+          },
+          (error) => {
+            log.debug(`Login error: ${error}`);
+            this.error = error;
           }
-        },
-        (error) => {
-          log.debug(`Login error: ${error}`);
-          this.error = error;
-        }
-      );
+        );
 
-      this.tripForm.reset();
+        this.tripForm.reset();
+    }
 
   }
 

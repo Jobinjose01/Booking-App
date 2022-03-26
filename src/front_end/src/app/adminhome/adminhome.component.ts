@@ -30,6 +30,7 @@ export class AdminHomeComponent implements OnInit {
     private router: Router
   ) {
     this.displayedColumns = [
+      'id',
       'source',
       'destination',
       'spots',

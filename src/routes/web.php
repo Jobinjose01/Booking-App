@@ -27,6 +27,8 @@ $router->group(['middleware' => ['auth'], 'prefix' => 'api'], function () use ($
 
     $router->get('cities',  ['uses' => 'CityController@getCities']);
 
-    $router->get('trips/all',  ['uses' => 'TripController@getAllTrips']);
+    $router->get('trip/all',  ['uses' => 'TripController@getAllTrips']);
+
+    $router->post('trip/create',  ['uses' => 'TripController@createTrip']);
 
 });

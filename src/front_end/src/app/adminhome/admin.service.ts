@@ -22,7 +22,7 @@ export class AdminService {
   constructor(private httpClient: HttpClient) {}
 
   getTripList() {
-    return this.httpClient.get<any>(environment.serverUrl + 'trips/all').pipe(
+    return this.httpClient.get<any>(environment.serverUrl + 'trip/all').pipe(
       map((result) => {
         return result;
       })
