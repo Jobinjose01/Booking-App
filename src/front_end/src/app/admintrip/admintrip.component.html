@@ -1,0 +1,77 @@
+<div class="container">
+    <mat-card>
+      <h1>
+        <mat-card-title translate>APP_NAME</mat-card-title>
+      </h1>
+      <mat-card-content>
+        <form (ngSubmit)="createTrip()" [formGroup]="tripForm" novalidate>
+          <div class="login-error" [hidden]="!error || isLoading" translate>{{ error }}</div>
+          <br />
+          <div class="login-fields" fxLayout="column" fxLayoutAlign="space-between none" fxFlex="30">
+            <mat-form-field appearance="fill">
+                <mat-label>From City </mat-label>
+                <mat-select matNativeControl 
+                    formControlName="source_city_id" 
+                    required
+                   
+                    >
+                    <mat-option *ngFor="let city of cities" [value]="city.id">
+                      {{city.name}}
+                    </mat-option>
+                </mat-select>
+              <mat-error *ngIf="tripForm.controls.source_city_id.invalid && tripForm.controls.source_city_id.touched">
+                <span translate>From City is required</span>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Destination City </mat-label>
+                <mat-select matNativeControl 
+                formControlName="destination_city_id" 
+                required
+               
+                >
+               
+                <mat-option *ngFor="let city of cities" [value]="city.id">
+                  {{city.name}}
+                </mat-option>
+            </mat-select>
+              <mat-error
+                *ngIf="tripForm.controls.destination_city_id.invalid && tripForm.controls.destination_city_id.touched"
+              >
+                <span translate>Destination City is required</span>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input
+                  type="number"
+                  matInput
+                  formControlName="spots"
+                  autocomplete="spots"
+                  [placeholder]="'Number of Spots' | translate"
+                  required
+                  min="1"
+                />
+                <mat-error
+                  *ngIf="tripForm.controls.spots.invalid && tripForm.controls.spots.touched"
+                >
+                  <span translate>Number of spots is required</span>
+                </mat-error>
+              </mat-form-field>
+  
+            <br />
+  
+            <button
+              mat-raised-button
+              color="primary"
+              class="my-button-class"
+              type="submit"
+              [disabled]="tripForm.invalid || isLoading"
+            >
+              <span translate>Create Trip</span>
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
