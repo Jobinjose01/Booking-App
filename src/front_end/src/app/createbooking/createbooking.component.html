@@ -80,10 +80,10 @@
           <td mat-cell *matCellDef="let element" align="left">{{ element.spots }}</td>
         </ng-container>
         
-        <ng-container matColumnDef="available_spots">
+        <ng-container matColumnDef="booked_spots">
           <th mat-header-cell *matHeaderCellDef>Available Spots</th>
           <td mat-cell *matCellDef="let element" align="left">
-            {{ element.available_spots || '-' }}
+            {{ element.spots - element.booked_spots  }}
           </td>
         </ng-container>
 

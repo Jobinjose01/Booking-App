@@ -50,7 +50,7 @@ export class CreateBookingComponent implements OnInit {
       'source',
       'destination',
       'spots',
-      'available_spots',
+      'booked_spots',
       'created_at'
     ];
   }
@@ -110,8 +110,7 @@ export class CreateBookingComponent implements OnInit {
       
       if(result != '' && result !== undefined && result != 0 ){
         
-        this.spots = result;
-            console.log(this.spots);
+           this.spots = result;            
            this.isLoading = true;
            const resultdata = this.bookingService.createBooking(trip_id, this.spots);
               resultdata
@@ -119,16 +118,20 @@ export class CreateBookingComponent implements OnInit {
               .subscribe(
                 data => {
                     this.result = data;
-                   
+                    this.isLoading = false;
                     if(this.result.status == 1){
                       this.snackbarMessage(this.result.message);
+                      this.checkAvailability();
                                    
                     }else{
                       this.snackbarMessage(this.result.message);
                     }
+                   
+                    
                 },
                  (error) => {
                     this.snackbarMessage("something went wrong !");
+                    this.isLoading = false;
                   }
             );
       }else{

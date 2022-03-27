@@ -26,14 +26,20 @@ class TripBookingController extends Controller
                             ->join('cities AS C','C.id','=','T.source_city_id')
                             ->join('cities AS C1','C1.id','=','T.destination_city_id')
                             ->leftJoin('trip_bookings AS TB','TB.trip_id','=','T.id')
+                            ->leftjoin('trip_booking_details AS TD',function($join){
+                                $join->on('TD.booking_id','TB.booking_id');
+                                $join->Where('TD.booking_status',1);
+                            })
                             ->Where('T.source_city_id',$source_city_id)
                             ->Where('T.destination_city_id',$destination_city_id)
                             ->WhereNull('T.deleted_at')
                             ->where('T.status',1)
                             ->groupBy('T.id')
-                            ->get([
-                                'C.name as source', 'C1.name as destination','T.spots','T.id','T.spots as available_spots'
-                            ]);
+                            ->select([
+                                'C.name as source', 'C1.name as destination','T.spots','T.id',
+                                \DB::raw('sum(TD.spots) as booked_spots')
+                            ])
+                            ->get();
             return response()->json($result);                 
         }
 
