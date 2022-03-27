@@ -52,13 +52,12 @@ export class AdminService {
     );
   }
 
-  updateDelivery(parcel_order_id: string, delivery_time: string) {
-    return this.httpClient
-      .post<any>(environment.serverUrl + 'parcel/delivery', { parcel_order_id, delivery_time })
-      .pipe(
-        map((result) => {
-          return result;
-        })
-      );
+  getAllBooking(){
+    return this.httpClient.get<any>(environment.serverUrl + 'trip/allbooking').pipe(
+      map((result) => {
+        return result;
+      })
+    );
   }
+  
 }

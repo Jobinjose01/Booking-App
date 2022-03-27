@@ -4,6 +4,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 
 import { AdminHomeComponent } from './adminhome.component';
 import { AdmintripComponent } from '../admintrip/admintrip.component';
+import { AdminbookingdetailsComponent } from '../adminbookingdetails/adminbookingdetails.component';
 import { Shell } from '@app/shell/shell.service';
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
     { path: '', redirectTo: '/adminhome', pathMatch: 'full' },
     { path: 'adminhome', component: AdminHomeComponent, data: { title: marker('Admin Dashboard > Trips') } },
     { path: 'createtrip', component: AdmintripComponent, data: { title: marker('Admin Dashboard > Create Trip') } },
+    { path: 'bookingdetails', component: AdminbookingdetailsComponent, data: { title: marker('Admin Dashboard > Booking Details') } },
   ]),
 ];
 

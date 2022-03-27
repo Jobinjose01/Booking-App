@@ -59,7 +59,7 @@ class TripBookingController extends Controller
             $total_count  = Trip::Where('id',$trip_id)->value('spots');
             $avilable = $total_count - $booked_count;
            
-
+            //Check spots availability
             if($requested_spots <= $avilable){
                 
                 $booking_id = uniqid();
@@ -73,10 +73,9 @@ class TripBookingController extends Controller
                 $booking->tripBookingDetails()->create([
                     'spots' => $requested_spots                    
                 ]);
-
-                $msg = "Booked Successfully!";
+              
                 $data['status'] = 1;
-                $data['message'] = $msg;
+                $data['message'] = "Booked Successfully!";
 
                 return response()->json($data);
 
@@ -173,5 +172,23 @@ class TripBookingController extends Controller
 
             return response()->json($data);
             
+        }
+
+
+        public function getAllBooking(){
+
+            $result = TripBooking::leftjoin('trip_booking_details AS D','D.booking_id','=','trip_bookings.booking_id')
+            ->join('users AS U','trip_bookings.booked_by','=','U.id')
+            ->join('trips AS T','T.id','=','trip_bookings.trip_id')
+            ->join('cities AS C','C.id','=','T.source_city_id')
+            ->join('cities AS C1','C1.id','=','T.destination_city_id')
+            ->WhereNull('T.deleted_at')
+            ->where('T.status',1)
+            ->get([
+                'C.name as source', 'C1.name as destination',
+                'D.spots','trip_bookings.booking_id','D.booking_status',
+                'trip_bookings.created_at','D.cancelled_on','U.name AS booked_by'
+            ]);
+        return response()->json($result); 
         }
 }

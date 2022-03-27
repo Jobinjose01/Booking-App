@@ -69,6 +69,16 @@
             <span translate>Trip Creation</span>
           </a>
           <mat-divider></mat-divider>
+          <a
+          mat-list-item
+          routerLink="/bookingdetails"
+          routerLinkActive="active"
+          (click)="isMobile && sidenav.close()"
+          *ngIf="admin"
+        >
+          <span translate>Booking Details</span>
+        </a>
+        <mat-divider></mat-divider>
         </mat-list>
       </nav>
     </mat-sidenav>

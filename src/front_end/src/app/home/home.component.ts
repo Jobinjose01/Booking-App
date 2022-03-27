@@ -57,9 +57,11 @@ export class HomeComponent implements OnInit {
       resultdata.pipe(first()).subscribe({
         next: (data) => {
           this.dataSource = data;
+          this.isLoading = false;
         },
         error: (error) => {
           this.errorMessage = error.message;
+          this.isLoading = false;
         },
       });
   }
