@@ -43,7 +43,7 @@
       <ng-container matColumnDef="updated_at">
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let element">
-          
+          <button [disabled]="element.booking_status != 'Booked'"  mat-flat-button color="warn" type="button" (click)="cancelMyTrip(element.booking_id,element.spots)" >Cancel</button>
         </td>
       </ng-container>
   

@@ -37,6 +37,8 @@ $router->group(['middleware' => ['auth'], 'prefix' => 'api'], function () use ($
 
     $router->get('trip/mytrips',  ['uses' => 'TripBookingController@getAllMyTrips']);
 
+    $router->post('trip/cancel',  ['uses' => 'TripBookingController@cancelMyTrip']);
+
 
 
 });

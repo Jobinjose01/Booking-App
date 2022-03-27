@@ -49,6 +49,17 @@ export class BookingService {
       );
   }
 
+  cancelBooking(booking_id:string, spots :bigint) {
+    
+    return this.httpClient
+      .post<any>(environment.serverUrl + 'trip/cancel', {booking_id, spots})
+      .pipe(
+        map((result) => {
+          return result;
+        })
+      );
+  }
+
   getMyBooking(){
 
     return this.httpClient.get<any>(environment.serverUrl + 'trip/mytrips').pipe(

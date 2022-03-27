@@ -86,11 +86,15 @@ export class CreateBookingComponent implements OnInit {
     resultdata.pipe(first()).subscribe({
       next: (data) => {
         this.dataSource = data;
+        if(this.dataSource.length == 0){
+          this.snackbarMessage("No Trip Found!");
+        }
       },
       error: (error) => {
         this.errorMessage = error.message;
       },
     });
+
 
     }
 

@@ -6,7 +6,7 @@ use Auth;
 use App\Models\City;
 use App\Models\Trip;
 use App\Models\TripBooking;
-use App\Models\TripBookingDetails;
+use App\Models\TripBookingDetail;
 use Illuminate\Http\Request;
 
 class TripBookingController extends Controller
@@ -123,5 +123,55 @@ class TripBookingController extends Controller
                 ]);
             return response()->json($result);     
 
+        }
+
+        public function cancelMyTrip(Request $request){
+
+            $user = Auth::user();
+            $booking_id = $request->input('booking_id');
+            $cancel_spots = $request->input('spots');
+
+            $booked_spots = TripBooking::leftjoin('trip_booking_details AS D','D.booking_id','=','trip_bookings.booking_id')
+                            ->Where('trip_bookings.booked_by',$user->id)
+                            ->Where('trip_bookings.booking_id',$booking_id)
+                            ->where('D.booking_status',1)
+                            ->value('D.spots');
+
+            if($booked_spots >= $cancel_spots){
+                //Full cancell
+                if($booked_spots == $cancel_spots){
+
+                    TripBookingDetail::Where('booking_id',$booking_id)
+                            ->update([
+                                'booking_status' => 0,
+                                'cancelled_on' => date('Y-m-d H:i:s')
+                            ]);
+                }
+                //Flexible cancel
+                if($booked_spots > $cancel_spots){
+                    //Update remaining spots
+                    TripBookingDetail::Where('booking_id',$booking_id)
+                            ->update([
+                                'spots' => ($booked_spots - $cancel_spots),                                
+                            ]);
+                    //canclled entry creating
+                    TripBookingDetail::create([
+                        'booking_id' => $booking_id,
+                        'spots' => $cancel_spots,
+                        'booking_status' => 0,
+                        'cancelled_on' => date('Y-m-d H:i:s')
+                    ]);
+                }
+
+                $data['status'] = 1;
+                $data['message'] = "Spots cancelled successfully!";
+            }else{
+
+                $msg = "Cancel request spots is greater than reserved spots!";
+                $data = $this->failedMessage($msg);
+            }
+
+            return response()->json($data);
+            
         }
 }
