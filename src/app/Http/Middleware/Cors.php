@@ -26,7 +26,7 @@ class Cors
          // Adds headers to the response
         $response->header('Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, PATCH, DELETE');
         $response->header('Access-Control-Allow-Headers', $request->header('Access-Control-Request-Headers'));
-        $response->header('Access-Control-Allow-Origin', '*');
+        $response->header('Access-Control-Allow-Origin', env('CROSS_ORIGIN'));
 
         // Sends it
         return $response;

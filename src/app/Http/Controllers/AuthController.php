@@ -18,20 +18,24 @@ class AuthController extends Controller
              
             $user = User::where('username', $request->input('username'))->Where('status',1)->first();
 
-            if(Hash::check($password, $user->password)){
+            if(!empty($user)){
+                if(Hash::check($password, $user->password)){
 
-                $api_key = bin2hex(random_bytes(32));
-                
-                User::where('username', $request->input('username'))->update(['api_token' => $api_key]);
+                    $api_key = bin2hex(random_bytes(32));
+                    
+                    User::where('username', $request->input('username'))->update(['api_token' => $api_key]);
 
-                $role = \DB::table('user_roles')->where('user_id',$user->id)->value('role_id');
+                    $role = \DB::table('user_roles')->where('user_id',$user->id)->value('role_id');
 
-                $token_data = ['name' => $user->name, 'role' => $role, 'access_token' => $api_key];
+                    $token_data = ['name' => $user->name, 'role' => $role, 'access_token' => $api_key];
 
-                $token = base64_encode(json_encode($token_data));
+                    $token = base64_encode(json_encode($token_data));
 
-                return $this->respondWithToken($token);
+                    return $this->respondWithToken($token);
 
+                }else{
+                    return response()->json(['message' => 'Invalid username or password','status' => 0]);
+                }
             }else{
                 return response()->json(['message' => 'Invalid username or password','status' => 0]);
             }
