@@ -9,13 +9,14 @@ Next, navigate in your terminal to the directory you cloned this, and spin up th
 - **php** - `:9000`
 
 
-Additional containers are included that handle Composer and Artisan commands *without* having to have these platforms installed on your local computer. Use the following command examples from your project root, modifying them to fit your particular use case.
-
-- `docker-compose run --rm composer update`
-- `docker-compose run --rm artisan migrate` 
 
 
 ## Setup
+
+## Write Permission for logs folder
+Run the below commands from the  `project_folder/src`  of the project using CLI
+
+`chmod -R 777 storage/`
 
 ## .env Copy
 Run the below commands from the `project_folder/src`  of the project using CLI
@@ -27,6 +28,7 @@ Run the below commands from the `project_folder/src`  of the project using CLI
 Run the below commands from `project_folder/src`
 
 `docker-compose run --rm artisan migrate` 
+
 `docker-compose run --rm artisan db:seed` 
 
 ## Users Available
@@ -40,6 +42,15 @@ All users default password is  `123456`
 ## Access URL
 
 [http://localhost:81/index.html](http://localhost:81/index.html)
+
+Database can be access using the below link
+
+[http://localhost:81/db.php](http://localhost:81/index.html)
+
+Host : mysql
+DB   : ticket_reservation
+User : root
+Pass : root
 
 If you want to change the port that is running on docker feel free to change that in the docker yml file , remember to change the `.env` CROSS_ORIGIN param accordingly.
 
