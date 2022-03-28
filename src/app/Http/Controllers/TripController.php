@@ -11,7 +11,11 @@ use Illuminate\Http\Request;
 class TripController extends Controller
 {
     
-        
+        /**
+         * GetAllTrips list trip master.
+         * @param  Request $request  
+         * @return Json A list of trips.
+         */
         public function getAllTrips(Request $request){
 
 
@@ -24,7 +28,13 @@ class TripController extends Controller
             return response()->json($data);
         }
 
-
+        /**
+         * CreateTrip Create a trip between two cities.
+         * @param  $source_city_id  bigint city_id
+         * @param  $destination_city_id bigint city_id
+         * @param  $spots integer number of spots available on the trip
+         * @return Json Success or failed message.
+         */
         public function createTrip(Request $request){
 
             $source_city_id = $request->input('source_city_id');

@@ -18,11 +18,13 @@ Additional containers are included that handle Composer and Artisan commands *wi
 ## Setup
 
 ## .env Copy
-run the below commands from the root folder of the project using CLI
+Run the below commands from the `project_folder/src`  of the project using CLI
 
 `cp .env.example .env`
 
 ## Migrate the DB schema and Seed the tables
+
+Run the below commands from `project_folder/src`
 
 `docker-compose run --rm artisan migrate` 
 `docker-compose run --rm artisan db:seed` 
@@ -60,8 +62,8 @@ root@containerID:/# mysql -u root -p
 
 ## Technology stack
 
-PHP - 8.1.4 (Lumen Framework)
-Angular - 12.1.1
+PHP - 8.1.4 ([Lumen Framework](https://lumen.laravel.com/docs/9.x)),
+Angular - 12.1.1,
 MySQL - 5.7.9
 
 

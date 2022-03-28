@@ -11,7 +11,11 @@ class CityController extends Controller
 {
     
 
-        
+        /**
+         * getCities fetch all active city and respond.
+         * @param  Request $request
+         * @return Json City and Name as Json list
+         */
         public function getCities(Request $request){
 
             $cities = City::where('status',1)->get(['id','name']);

@@ -13,7 +13,13 @@ use Illuminate\Http\Request;
 class TripBookingController extends Controller
 {
     
-      
+        /**
+         * CheckAvailability check all the available trips based on user query.
+         * @param  Request $request 
+         * @param  bigint $source_city_id   
+         * @param  bigint $destination_city_id  
+         * @return Json All available trips will return with booked_spots if any.
+         */
         public function checkAvailability(Request $request){
 
             $source_city_id = $request->input('source_city_id');
@@ -44,7 +50,13 @@ class TripBookingController extends Controller
 
        
 
-
+        /**
+         * CreateBooking create a booking if spots are available.
+         * @param  Request $request 
+         * @param  bigint $trip_id   
+         * @param  bigint $spots  
+         * @return Json if spots available return suucess else with details.
+         */
         public function createBooking(Request $request){
 
             $trip_id = $request->input('trip_id');
@@ -89,6 +101,11 @@ class TripBookingController extends Controller
             return response()->json($data);
         }
 
+        /**
+         * CountBookedSpots checked booked count of the trip.
+         * @param  bigint $trip_id  
+         * @return number return booked count on a trip.
+         */
         public function countBookedSpots($trip_id){
 
             return \Db::table('trip_bookings AS B')
@@ -98,7 +115,12 @@ class TripBookingController extends Controller
                             ->where('B.trip_id',$trip_id)
                             ->SUM('D.spots');
         }
-
+         
+        /**
+         * GetAllMyTrips fetch all my booked trips.
+         * @param  Request  $user object with details
+         * @return Json return all booked trip as json list.
+         */
         public function getAllMyTrips(Request $request){
 
             $user = Auth::user();
@@ -122,6 +144,12 @@ class TripBookingController extends Controller
 
         }
 
+        /**
+         * CancelMyTrip cancel a reserved trip.
+         * @param  string $booking_id  
+         * @param  integer $spots  number of spots to cancel
+         * @return Json based on the logic cancel or respond with details.
+         */
         public function cancelMyTrip(Request $request){
 
             $user = Auth::user();
@@ -171,7 +199,10 @@ class TripBookingController extends Controller
             
         }
 
-
+        /**
+         * GetAllBooking List all the booked trip with details.
+         * @return Json list with booking details.
+         */
         public function getAllBooking(){
 
                 $result = TripBooking::leftjoin('trip_booking_details AS D','D.booking_id','=','trip_bookings.booking_id')

@@ -10,7 +10,14 @@ class AuthController extends Controller
 {
     
 
-        
+        /**
+         * authendicate accept request.
+         *
+         * @param  \Illuminate\Http\Request  $request
+         * @param  $username string
+         * @param  $password string
+         * @return Json with token or failed status
+         */
         public function authendicate(Request $request){
 
             $username = $request->input('username');
@@ -42,14 +49,20 @@ class AuthController extends Controller
         }
 
 
+
+        /**
+         * RespondWithToken success request with token response.
+         * @param  $token string
+         * @return Json with token 
+         */
         protected function respondWithToken($token){   
        
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => 60 * 60 *60,
-            'status' => 1,
-            'message' => "login successfull"
-        ]);
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => 60 * 60 *60,
+                'status' => 1,
+                'message' => "login successfull"
+            ]);
         }
 }
