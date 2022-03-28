@@ -39,7 +39,7 @@ All users default password is  `123456`
 
 ## Access URL
 
-`http://localhost:81/login`
+`http://localhost:81/index.html`
 
 If you want to change the port that is running on docker feel free to change that in the docker yml file , remember to chnage the `.env` CROSS_ORIGIN param accordingly.
 
