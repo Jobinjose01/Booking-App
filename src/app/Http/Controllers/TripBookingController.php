@@ -13,12 +13,8 @@ use Illuminate\Http\Request;
 class TripBookingController extends Controller
 {
     
-        public function __constructor(){
-
-            
-        }
-        
-        public function checkAvailabilty(Request $request){
+      
+        public function checkAvailability(Request $request){
 
             $source_city_id = $request->input('source_city_id');
             $destination_city_id = $request->input('destination_city_id');

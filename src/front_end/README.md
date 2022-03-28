@@ -1,4 +1,4 @@
-# pickup_app
+# Booking App
 
 
 # Getting started

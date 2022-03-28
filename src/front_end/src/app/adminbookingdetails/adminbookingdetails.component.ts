@@ -71,8 +71,6 @@ export class AdminbookingdetailsComponent implements AfterViewInit  {
 
     this.isLoading = true;
     
-
-   
     const resultdata = this.adminService.getAllBooking();
     resultdata.pipe(first()).subscribe({
       next: (data) => {
