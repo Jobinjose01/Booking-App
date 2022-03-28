@@ -65,7 +65,7 @@ export class CreateBookingComponent implements OnInit {
     const resultdata =   this.bookingService.getCities();
     resultdata.pipe(first()).subscribe({
       next: (data) => {
-        this.cities = data;
+        this.cities = data.data;
       },
       error: (error) => {
         this.errorMessage = error.message;
@@ -85,7 +85,7 @@ export class CreateBookingComponent implements OnInit {
     const resultdata =   this.bookingService.checkAvailability(this.bookingForm.value);
     resultdata.pipe(first()).subscribe({
       next: (data) => {
-        this.dataSource = data;
+        this.dataSource = data.data;
         if(this.dataSource.length == 0){
           this.snackbarMessage("No Trip Found!");
         }

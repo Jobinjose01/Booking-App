@@ -45,6 +45,8 @@ class Authenticate
             if (empty($token) || empty($user)) {
                 return response('Unauthorized.', 401);
             }
+            //TODO: Role of the token can be verified and prevent unauthorized access
+            //Even if the user alter roles from Client side
         }
        
         return $next($request);

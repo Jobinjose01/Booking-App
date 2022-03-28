@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\City;
 use App\Models\Trip;
+use App\Helpers\Helper;
 use App\Models\TripBooking;
 use App\Models\TripBookingDetail;
 use Illuminate\Http\Request;
@@ -40,19 +41,12 @@ class TripBookingController extends Controller
                                 \DB::raw('sum(TD.spots) as booked_spots')
                             ])
                             ->get();
-            return response()->json($result);                 
+
+            $data = Helper::successResponse($result);
+            return response()->json($data);                 
         }
 
        
-
-        public function failedMessage($msg){
-
-            $data['status'] = 0;
-            $data['data'] = [];
-            $data['message'] = $msg;
-            return $data;
-            
-        }       
 
 
         public function createBooking(Request $request){
@@ -80,20 +74,19 @@ class TripBookingController extends Controller
                     'spots' => $requested_spots                    
                 ]);
               
-                $data['status'] = 1;
-                $data['message'] = "Booked Successfully!";
-
+               
+                $data = Helper::successResponse([], "Booked Successfully!");
                 return response()->json($data);
 
             }elseif($avilable > 0){
                 
                 $msg = "Not enough spots!";
-                $data = $this->failedMessage($msg);
+                $data = Helper::failedResponse($msg);
             }
 
             if($avilable == 0){
                 $msg = "Sold Out!";
-                $data = $this->failedMessage($msg);                
+                $data = Helper::failedResponse($msg);                
                 
             }
 
@@ -127,7 +120,9 @@ class TripBookingController extends Controller
                     'D.spots','trip_bookings.booking_id','D.booking_status',
                     'trip_bookings.created_at','D.cancelled_on'
                 ]);
-            return response()->json($result);     
+            
+            $data = Helper::successResponse($result);
+            return response()->json($data);     
 
         }
 
@@ -169,12 +164,11 @@ class TripBookingController extends Controller
                     ]);
                 }
 
-                $data['status'] = 1;
-                $data['message'] = "Spots cancelled successfully!";
+                $data = Helper::successResponse([], "Spots cancelled successfully!");
             }else{
 
                 $msg = "Cancel request spots is greater than reserved spots!";
-                $data = $this->failedMessage($msg);
+                $data = Helper::failedResponse($msg);
             }
 
             return response()->json($data);
@@ -197,6 +191,8 @@ class TripBookingController extends Controller
                         'D.spots','trip_bookings.booking_id','D.booking_status',
                         'trip_bookings.created_at','D.cancelled_on','U.name AS booked_by'
                     ]);
-            return response()->json($result); 
+            
+            $data = Helper::successResponse($result);
+            return response()->json($data); 
         }
 }

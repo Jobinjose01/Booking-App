@@ -5,25 +5,22 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\City;
 use App\Models\Trip;
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 
 class TripController extends Controller
 {
     
-        public function __constructor(){
-
-            
-        }
         
         public function getAllTrips(Request $request){
 
 
-            $data = Trip::join('cities AS C', 'C.id' ,'=', 'trips.source_city_id')
+            $result = Trip::join('cities AS C', 'C.id' ,'=', 'trips.source_city_id')
                         ->join('cities AS C1', 'C1.id' ,'=', 'trips.destination_city_id')
                         ->WhereNull('trips.deleted_at')
                         ->get(['C.name as source', 'C1.name as destination', 'trips.spots', 'trips.created_at', 'trips.status' ,'trips.id']);
             
-           
+            $data = Helper::successResponse($result);
             return response()->json($data);
         }
 
@@ -47,31 +44,17 @@ class TripController extends Controller
 
             }catch(Exception $e) {
 
-               $this->failedMessage("Trip Creation Failed!");
+                $data = Helper::failedResponse("Trip Creation Failed!");
             }
 
             if($result){
-
-                $data['status'] = 1;
-                $data['data'] = $result;
-                $data['message'] = "Trip Created Successfully!";
-
+                $data =  Helper::successResponse($result,"Trip Created Successfully!");
             }else{
-
-                $this->failedMessage("Trip Creation Failed!");
+                $data = Helper::failedResponse("Trip Creation Failed!");
             }
 
             return response()->json($data);
 
         }
-
-
-        public function failedMessage($msg){
-
-            $data['status'] = 0;
-            $data['data'] = [];
-            $data['message'] = $msg;
-            return response()->json($data);
-            exit;
-        }
+        
 }

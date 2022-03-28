@@ -30,7 +30,7 @@ export class AdminService {
   }
   
   getCities() {
-    return this.httpClient.get<any>(environment.serverUrl + 'cities').pipe(
+    return this.httpClient.get<any>(environment.serverUrl + 'trip/cities').pipe(
       map((result) => {
         return result;
       })

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Models\City;
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -13,8 +14,9 @@ class CityController extends Controller
         
         public function getCities(Request $request){
 
-            $user = Auth::user();
-            //echo $user->name;
-            return response()->json(City::where('status',1)->get(['id','name']));
+            $cities = City::where('status',1)->get(['id','name']);
+            $data = Helper::successResponse($cities);
+            
+            return response()->json($data);
         }
 }

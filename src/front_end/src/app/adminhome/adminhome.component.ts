@@ -54,7 +54,7 @@ export class AdminHomeComponent implements OnInit {
       const resultdata = this.adminService.getTripList();
       resultdata.pipe(first()).subscribe({
         next: (data) => {
-          this.dataSource = data;
+          this.dataSource = data.data;
         },
         error: (error) => {
           this.errorMessage = error.message;

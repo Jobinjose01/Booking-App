@@ -54,7 +54,7 @@ export class AdmintripComponent implements OnInit {
     const resultdata =   this.adminService.getCities();
     resultdata.pipe(first()).subscribe({
       next: (data) => {
-        this.cities = data;
+        this.cities = data.data;
       },
       error: (error) => {
         this.errorMessage = error.message;
