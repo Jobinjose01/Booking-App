@@ -42,25 +42,34 @@ class TripController extends Controller
             $spots = $request->input('spots');
             $user = Auth::user();
 
-            try{
+            $validation = \Validator::make($request->all(), with(new Helper)->validateCreateTrip());
 
-                $result = Trip::Create([
-                    'source_city_id' => $source_city_id,
-                    'destination_city_id' => $destination_city_id,
-                    'spots' => $spots,
-                    'created_by' => !empty($user->id) ? $user->id : 1,
-                    'updated_by' => !empty($user->id) ? $user->id : 1,
-                ]);
+            if ($validation->fails()) {
 
-            }catch(Exception $e) {
+                $msg = "Validation Error!";
+                $data = Helper::failedResponse($msg);  
 
-                $data = Helper::failedResponse("Trip Creation Failed!");
-            }
-
-            if($result){
-                $data =  Helper::successResponse($result,"Trip Created Successfully!");
             }else{
-                $data = Helper::failedResponse("Trip Creation Failed!");
+                try{
+
+                    $result = Trip::Create([
+                        'source_city_id' => $source_city_id,
+                        'destination_city_id' => $destination_city_id,
+                        'spots' => $spots,
+                        'created_by' => !empty($user->id) ? $user->id : 1,
+                        'updated_by' => !empty($user->id) ? $user->id : 1,
+                    ]);
+
+                }catch(Exception $e) {
+
+                    $data = Helper::failedResponse("Trip Creation Failed!");
+                }
+
+                if($result){
+                    $data =  Helper::successResponse($result,"Trip Created Successfully!");
+                }else{
+                    $data = Helper::failedResponse("Trip Creation Failed!");
+                }
             }
 
             return response()->json($data);

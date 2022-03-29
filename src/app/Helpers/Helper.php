@@ -34,4 +34,57 @@ class Helper {
         $data['data'] = [];
         return $data;
     }
+
+    /**
+     * ValidateAvailability make sure city_id are numeric.
+     * @param  $msg string
+     * @return Array 
+     */
+    public function validateAvailability()
+    {
+        return [
+            'source_city_id' => 'required|numeric',
+            'destination_city_id' => 'required|numeric',           
+        ];
+    
+    }
+    /**
+     * ValidateBooking make sure booking params are valid.
+     * @param  $msg string
+     * @return Array 
+     */
+    public function validateBooking()
+    {
+        return [
+            'trip_id' => 'required|numeric',
+            'spots' => 'required|numeric|gt:0',           
+        ];
+    
+    }
+    /**
+     * ValidateCancelTrip validate the booking id and spots.
+     * @param  $msg string
+     * @return Array 
+     */
+    public function validateCancelTrip()
+    {
+        return [
+            'booking_id' => 'required|string',
+            'spots' => 'required|numeric|gt:0',           
+        ];
+    }
+
+    /**
+     * ValidateCreateTrip validate the user inputs.
+     * @param  $msg string
+     * @return Array 
+     */
+    public function ValidateCreateTrip()
+    {
+        return [
+            'source_city_id' => 'required|numeric|gt:0',
+            'destination_city_id' => 'required|numeric|gt:0',
+            'spots' => 'required|numeric|gt:0',           
+        ];
+    }
 }
