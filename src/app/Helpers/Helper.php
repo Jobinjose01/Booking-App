@@ -37,7 +37,6 @@ class Helper {
 
     /**
      * ValidateAvailability make sure city_id are numeric.
-     * @param  $msg string
      * @return Array 
      */
     public function validateAvailability()
@@ -50,7 +49,6 @@ class Helper {
     }
     /**
      * ValidateBooking make sure booking params are valid.
-     * @param  $msg string
      * @return Array 
      */
     public function validateBooking()
@@ -63,7 +61,6 @@ class Helper {
     }
     /**
      * ValidateCancelTrip validate the booking id and spots.
-     * @param  $msg string
      * @return Array 
      */
     public function validateCancelTrip()
@@ -76,7 +73,6 @@ class Helper {
 
     /**
      * ValidateCreateTrip validate the user inputs.
-     * @param  $msg string
      * @return Array 
      */
     public function ValidateCreateTrip()
