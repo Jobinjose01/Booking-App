@@ -43,8 +43,8 @@ class Helper {
     public function validateAvailability()
     {
         return [
-            'source_city_id' => 'required|numeric',
-            'destination_city_id' => 'required|numeric',           
+            'source_city_id' => 'required|numeric|gt:0',
+            'destination_city_id' => 'required|numeric|gt:0',           
         ];
     
     }
@@ -56,7 +56,7 @@ class Helper {
     public function validateBooking()
     {
         return [
-            'trip_id' => 'required|numeric',
+            'trip_id' => 'required|numeric|gt:0',
             'spots' => 'required|numeric|gt:0',           
         ];
     

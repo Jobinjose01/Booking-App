@@ -30,9 +30,9 @@ class TripController extends Controller
 
         /**
          * CreateTrip Create a trip between two cities.
-         * @param  $source_city_id  bigint city_id
-         * @param  $destination_city_id bigint city_id
-         * @param  $spots integer number of spots available on the trip
+         * @param  bigint $source_city_id   
+         * @param  bigint $destination_city_id  
+         * @param  integer $spots  number of spots available on the trip
          * @return Json Success or failed message.
          */
         public function createTrip(Request $request){
